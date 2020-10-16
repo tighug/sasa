@@ -63,7 +63,7 @@ func EncodeFiles(srcDir, outDir string) (model.Problems, error) {
 			}
 		}
 
-		prob := model.Problem{}
+		var prob model.Problem
 		prob.Name = name
 		prob.Charset = result.Charset
 		prob.ID, err = strconv.Atoi(id)

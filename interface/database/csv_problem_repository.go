@@ -17,21 +17,35 @@ func (repo *ProblemRepository) SaveAll(probs model.Problems) error {
 	if err != nil {
 		return err
 	}
+	defer file.Close()
+	if err := file.Truncate(0); err != nil {
+		return err
+	}
 	return gocsv.MarshalFile(&probs, file)
 }
 
 // FindAll ...
 func (repo *ProblemRepository) FindAll() (model.Problems, error) {
 	// TODO: Avoid hard coding
-	file, err := os.OpenFile("./database.csv", os.O_WRONLY|os.O_CREATE, os.ModePerm)
+	file, err := os.OpenFile("./database.csv", os.O_RDWR|os.O_CREATE, os.ModePerm)
 	if err != nil {
 		return nil, err
 	}
 	defer file.Close()
 
-	var probs model.Problems
+	probs := []*model.Problem{}
 	if err := gocsv.UnmarshalFile(file, &probs); err != nil {
-		return probs, err
+		return nil, err
 	}
-	return probs, err
+	newProbs := model.Problems{}
+	for _, prob := range probs {
+		newProbs = append(newProbs, model.Problem{
+			ID:         prob.ID,
+			Name:       prob.Name,
+			CanCompile: prob.CanCompile,
+			Charset:    prob.Charset,
+			Scores:     prob.Scores,
+		})
+	}
+	return newProbs, err
 }
