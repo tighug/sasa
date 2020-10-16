@@ -4,7 +4,10 @@ package model
 type Problem struct {
 	ID         int
 	Name       string
-	CanCompile bool
 	Charset    string
+	CanCompile bool
 	Scores     []bool
 }
+
+// Problems ...
+type Problems []Problem

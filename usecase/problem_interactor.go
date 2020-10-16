@@ -11,11 +11,11 @@ type ProblemInteractor struct {
 }
 
 // SaveAll ...
-func (interactor *ProblemInteractor) SaveAll(probs []model.Problem) error {
+func (interactor *ProblemInteractor) SaveAll(probs model.Problems) error {
 	return interactor.ProblemRepository.SaveAll(probs)
 }
 
 // FindAll ...
-func (interactor *ProblemInteractor) FindAll() ([]model.Problem, error) {
+func (interactor *ProblemInteractor) FindAll() (model.Problems, error) {
 	return interactor.ProblemRepository.FindAll()
 }
