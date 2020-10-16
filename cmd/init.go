@@ -1,34 +1,17 @@
 package cmd
 
 import (
-	"os"
-
-	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
+	"github.com/tighug/sasa/interface/controller"
 )
 
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Create src, resource and answer.txt",
+	Short: "Initialize a directory",
 	Run: func(cmd *cobra.Command, args []string) {
-		if err := os.Mkdir("src", 0775); err != nil {
-			log.Err(err).Msg("Cannot create src.")
-		} else {
-			log.Info().Msg("Created src.")
-		}
-
-		if err := os.Mkdir("resource", 0775); err != nil {
-			log.Err(err).Msg("Cannot create resource.")
-		} else {
-			log.Info().Msg("Created resource.")
-		}
-
-		if file, err := os.Create("answer.txt"); err != nil {
-			log.Err(err).Msg("Cannot create " + file.Name())
-		} else {
-			log.Info().Msg("Created " + file.Name())
-		}
+		controller := controller.NewProblemController()
+		controller.Init("./src/", "./resource/", "./answer.txt")
 	},
 }
 
