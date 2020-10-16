@@ -6,7 +6,7 @@ type Problem struct {
 	Name       string
 	Charset    string
 	CanCompile bool
-	Scores     []bool
+	Scores     string
 }
 
 // Problems ...
