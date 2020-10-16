@@ -1,7 +1,8 @@
 package controller
 
 import (
-	"github.com/tighug/sasa/domain/service/fs"
+	"github.com/tighug/sasa/domain/service"
+	"github.com/tighug/sasa/interface/database"
 	"github.com/tighug/sasa/usecase"
 )
 
@@ -12,12 +13,20 @@ type ProblemController struct {
 
 // NewProblemController ...
 func NewProblemController() *ProblemController {
-	return &ProblemController{}
+	return &ProblemController{
+		Interactor: usecase.ProblemInteractor{
+			ProblemRepository: &database.ProblemRepository{},
+		},
+	}
 }
 
 // Encode ...
-func (controller *ProblemController) Encode() {
-	fs.EncodeFiles("./src/", "./encoded/")
+func (controller *ProblemController) Encode(srcDir, outDir string) error {
+	probs, err := service.EncodeFiles(srcDir, outDir)
+	if err != nil {
+		return err
+	}
+	return controller.Interactor.SaveAll(probs)
 }
 
 // Compile ...
