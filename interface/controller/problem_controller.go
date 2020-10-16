@@ -20,6 +20,13 @@ func NewProblemController() *ProblemController {
 	}
 }
 
+// Init ...
+func (controller *ProblemController) Init(srcDir, resourceDir, answerFile string) {
+	service.EnsureDir(srcDir)
+	service.EnsureDir(resourceDir)
+	service.EnsureFile(answerFile)
+}
+
 // Encode ...
 func (controller *ProblemController) Encode(srcDir, outDir string) error {
 	probs, err := service.EncodeFiles(srcDir, outDir)
