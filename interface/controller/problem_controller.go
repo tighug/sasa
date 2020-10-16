@@ -50,4 +50,6 @@ func (controller *ProblemController) Compile(srcDir, outDir string) error {
 }
 
 // Run ...
-func (controller *ProblemController) Run() {}
+func (controller *ProblemController) Run(srcDir, outDir string) error {
+	return service.RunFiles(srcDir, outDir)
+}
