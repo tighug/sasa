@@ -37,8 +37,16 @@ func (controller *ProblemController) Encode(srcDir, outDir string) error {
 }
 
 // Compile ...
-func (controller *ProblemController) Compile() {
-	controller.Interactor.FindAll()
+func (controller *ProblemController) Compile(srcDir, outDir string) error {
+	probs, err := controller.Interactor.FindAll()
+	if err != nil {
+		return err
+	}
+	probs, err = service.CompileFiles(srcDir, outDir, probs)
+	if err != nil {
+		return err
+	}
+	return controller.Interactor.SaveAll(probs)
 }
 
 // Run ...
