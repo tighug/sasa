@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 	"github.com/tighug/sasa/interface/controller"
 )
@@ -11,7 +12,9 @@ var encodeCmd = &cobra.Command{
 	Short: "Encode .c files",
 	Run: func(cmd *cobra.Command, args []string) {
 		controller := controller.NewProblemController()
-		controller.Encode()
+		if err := controller.Encode("./src/", "./encoded/"); err != nil {
+			log.Err(err).Msg("")
+		}
 	},
 }
 
