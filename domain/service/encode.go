@@ -20,7 +20,7 @@ func EncodeFiles(srcDir, outDir string) (model.Problems, error) {
 	if err != nil {
 		return nil, err
 	}
-	ensureDir(outDir)
+	EnsureDir(outDir)
 
 	var probs model.Problems
 
