@@ -7,8 +7,8 @@ import (
 )
 
 // compileCmd represents the compile command
-var compileCmd = &cobra.Command{
-	Use:   "compile",
+var buildCmd = &cobra.Command{
+	Use:   "build",
 	Short: "Compile .c files",
 	Run: func(cmd *cobra.Command, args []string) {
 		controller := controller.NewProblemController()
@@ -19,15 +19,15 @@ var compileCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(compileCmd)
+	rootCmd.AddCommand(buildCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// compileCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// buildCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// compileCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// buildCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
