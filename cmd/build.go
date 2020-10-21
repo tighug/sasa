@@ -13,7 +13,7 @@ var buildCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		controller := controller.NewProblemController()
 		if err := controller.Compile(config.EncodedDir, config.BuildDir); err != nil {
-			log.Err(err)
+			log.Err(err).Msg("")
 		}
 	},
 }

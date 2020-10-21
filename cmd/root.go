@@ -17,6 +17,7 @@ type Config struct {
 	OutputDir  string
 	AnsFile    string
 	DBFile     string
+	InputFile  string
 }
 
 var config Config
@@ -30,7 +31,7 @@ var rootCmd = &cobra.Command{
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		log.Err(err)
+		log.Err(err).Msg("")
 	}
 }
 
@@ -58,6 +59,7 @@ func initConfig() {
 	viper.SetDefault("OutputDir", "output")
 	viper.SetDefault("AnsFile", "answer.txt")
 	viper.SetDefault("DBFile", "db.csv")
+	viper.SetDefault("InputFile", "input.txt")
 
 	viper.AutomaticEnv() // read in environment variables that match
 

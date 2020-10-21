@@ -13,7 +13,7 @@ var encodeCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		controller := controller.NewProblemController()
 		if err := controller.Encode(config.SrcDir, config.EncodedDir); err != nil {
-			log.Err(err)
+			log.Err(err).Msg("")
 		}
 	},
 }

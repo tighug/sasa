@@ -26,8 +26,8 @@ func (controller *ProblemController) Init(srcDir, ansFile, configFile string) er
 }
 
 // Encode ...
-func (controller *ProblemController) Encode(srcDir, outDir string) error {
-	probs, err := service.EncodeFiles(srcDir, outDir)
+func (controller *ProblemController) Encode(srcDir, destDir string) error {
+	probs, err := service.EncodeFiles(srcDir, destDir)
 	if err != nil {
 		return err
 	}
@@ -35,12 +35,12 @@ func (controller *ProblemController) Encode(srcDir, outDir string) error {
 }
 
 // Compile ...
-func (controller *ProblemController) Compile(srcDir, outDir string) error {
+func (controller *ProblemController) Compile(srcDir, destDir string) error {
 	probs, err := controller.Interactor.FindAll()
 	if err != nil {
 		return err
 	}
-	probs, err = service.CompileFiles(srcDir, outDir, probs)
+	probs, err = service.CompileFiles(srcDir, destDir, probs)
 	if err != nil {
 		return err
 	}
@@ -48,6 +48,6 @@ func (controller *ProblemController) Compile(srcDir, outDir string) error {
 }
 
 // Run ...
-func (controller *ProblemController) Run(srcDir, outDir string) error {
-	return service.RunFiles(srcDir, outDir)
+func (controller *ProblemController) Run(srcDir, destDir, inputFile string) error {
+	return service.RunFiles(srcDir, destDir, inputFile)
 }

@@ -9,7 +9,8 @@ EncodedDir: encoded
 BuildDir: build
 OutputDir: output
 AnsFile: answer.txt
-DBFile: db.csv`)
+DBFile: db.csv
+InputFile: input.txt`)
 
 // Init ...
 func Init(srcDir, ansFile, configFile string) error {

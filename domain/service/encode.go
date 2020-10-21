@@ -3,8 +3,6 @@ package service
 import (
 	"bufio"
 	"io"
-	"io/ioutil"
-	"os"
 	"strconv"
 	"strings"
 
@@ -15,12 +13,14 @@ import (
 )
 
 // EncodeFiles ...
-func EncodeFiles(srcDir, outDir string) (model.Problems, error) {
-	srcFileInfos, err := ioutil.ReadDir(srcDir)
+func EncodeFiles(srcDir, destDir string) (model.Problems, error) {
+	srcFileInfos, err := AFs.ReadDir(srcDir)
 	if err != nil {
 		return nil, err
 	}
-	EnsureDir(outDir)
+	if err := EnsureDir(destDir); err != nil {
+		return nil, err
+	}
 
 	var probs model.Problems
 
@@ -29,9 +29,9 @@ func EncodeFiles(srcDir, outDir string) (model.Problems, error) {
 		id := srcFileName[:7]
 		slice := strings.Split(srcFileName[8:], "_")
 		name := slice[0]
-		srcPath := strings.Join([]string{srcDir, srcFileName}, "")
-		outFileName := strings.Join([]string{id, name}, "_")
-		outPath := strings.Join([]string{outDir, outFileName, ".c"}, "")
+		srcPath := strings.Join([]string{srcDir, "/", srcFileName}, "")
+		destFileName := strings.Join([]string{id, name}, "_")
+		destPath := strings.Join([]string{destDir, "/", destFileName, ".c"}, "")
 
 		charset := "UTF-8"
 		result, err := detectCharset(srcPath)
@@ -39,45 +39,45 @@ func EncodeFiles(srcDir, outDir string) (model.Problems, error) {
 			return nil, err
 		}
 
-		srcFile, err := os.Open(srcPath)
+		srcFile, err := AFs.Open(srcPath)
 		if err != nil {
 			return nil, err
 		}
 		defer srcFile.Close()
 
-		outFile, err := os.Create(outPath)
+		destFile, err := AFs.Create(destPath)
 		if err != nil {
 			return nil, err
 		}
-		defer outFile.Close()
+		defer destFile.Close()
 
 		if result.Charset == charset {
-			io.Copy(outFile, srcFile)
+			io.Copy(destFile, srcFile)
 		} else {
 			// TODO: Decrease denpedencies
 			charset = "Shft_JIS"
 			reader := transform.NewReader(srcFile, japanese.ShiftJIS.NewDecoder())
-			tee := io.TeeReader(reader, outFile)
-			s := bufio.NewScanner(tee)
-			for s.Scan() {
+			tee := io.TeeReader(reader, destFile)
+			scanner := bufio.NewScanner(tee)
+			for scanner.Scan() {
 			}
 		}
 
 		var prob model.Problem
+
 		prob.Name = name
 		prob.Charset = result.Charset
 		prob.ID, err = strconv.Atoi(id)
 		if err != nil {
 			return nil, err
 		}
-
 		probs = append(probs, prob)
 	}
 	return probs, err
 }
 
 func detectCharset(filePath string) (*chardet.Result, error) {
-	content, err := ioutil.ReadFile(filePath)
+	content, err := AFs.ReadFile(filePath)
 	if err != nil {
 		return nil, err
 	}
