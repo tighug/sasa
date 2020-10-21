@@ -21,10 +21,8 @@ func NewProblemController() *ProblemController {
 }
 
 // Init ...
-func (controller *ProblemController) Init(srcDir, resourceDir, answerFile string) {
-	service.EnsureDir(srcDir)
-	service.EnsureDir(resourceDir)
-	service.EnsureFile(answerFile)
+func (controller *ProblemController) Init(srcDir, ansFile, configFile string) error {
+	return service.Init(srcDir, ansFile, configFile)
 }
 
 // Encode ...

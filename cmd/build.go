@@ -9,25 +9,15 @@ import (
 // compileCmd represents the compile command
 var buildCmd = &cobra.Command{
 	Use:   "build",
-	Short: "Compile .c files",
+	Short: "Compile encoded source files",
 	Run: func(cmd *cobra.Command, args []string) {
 		controller := controller.NewProblemController()
-		if err := controller.Compile("./encoded/", "./build/"); err != nil {
-			log.Err(err).Msg("")
+		if err := controller.Compile(config.EncodedDir, config.BuildDir); err != nil {
+			log.Err(err)
 		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(buildCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// buildCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// buildCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
