@@ -19,8 +19,6 @@ type Config struct {
 	DBFile     string
 }
 
-const configFile = ".sasarc.yaml"
-
 var config Config
 
 var rootCmd = &cobra.Command{
@@ -51,7 +49,8 @@ func initLogger() {
 
 func initConfig() {
 	viper.AddConfigPath(".")
-	viper.SetConfigName(configFile)
+	viper.SetConfigName(".sasarc")
+	viper.SetConfigType("yaml")
 
 	viper.SetDefault("SrcDir", "src")
 	viper.SetDefault("EncodedDir", "encoded")

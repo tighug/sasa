@@ -5,6 +5,8 @@ import (
 	"github.com/tighug/sasa/interface/controller"
 )
 
+const configFile = ".sasarc.yaml"
+
 var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize the current directory",

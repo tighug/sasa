@@ -12,7 +12,7 @@ var runCmd = &cobra.Command{
 	Short: "Execute binary files",
 	Run: func(cmd *cobra.Command, args []string) {
 		controller := controller.NewProblemController()
-		if err := controller.Run("./build/", "./out/"); err != nil {
+		if err := controller.Run(config.BuildDir, config.OutputDir); err != nil {
 			log.Err(err).Msg("")
 		}
 	},
