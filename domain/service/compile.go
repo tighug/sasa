@@ -1,8 +1,6 @@
 package service
 
 import (
-	"io/ioutil"
-	"os"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -11,25 +9,27 @@ import (
 )
 
 // CompileFiles ...
-func CompileFiles(srcDir, outDir string, probs model.Problems) (model.Problems, error) { // TODO: Change val passing to ref passing
-	srcFileInfos, err := ioutil.ReadDir(srcDir)
+func CompileFiles(srcDir, destDir string, probs model.Problems) (model.Problems, error) { // TODO: Change val passing to ref passing
+	srcFileInfos, err := AFs.ReadDir(srcDir)
 	if err != nil {
 		return nil, err
 	}
-	EnsureDir(outDir)
+	if err := EnsureDir(destDir); err != nil {
+		return nil, err
+	}
 
 	for _, srcFileInfo := range srcFileInfos {
 		srcFileName := srcFileInfo.Name()
-		outFileName := strings.Split(srcFileName, ".")[0]
+		destFileName := strings.Split(srcFileName, ".")[0]
 		srcPath := strings.Join([]string{srcDir, srcFileName}, "")
-		outPath := strings.Join([]string{outDir, outFileName}, "")
+		destPath := strings.Join([]string{destDir, destFileName}, "")
 		canCompile := true
 		id, _ := strconv.Atoi(srcFileName[:7])
 
-		cmd := exec.Command("gcc", srcPath, "-o", outPath)
+		cmd := exec.Command("gcc", srcPath, "-o", destPath)
 		output, err := cmd.CombinedOutput()
 		if len(output) != 0 {
-			file, err := os.Create(strings.Join([]string{outPath, ".log"}, ""))
+			file, err := AFs.Create(strings.Join([]string{destPath, ".log"}, ""))
 			if err != nil {
 				return nil, err
 			}

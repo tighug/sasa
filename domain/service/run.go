@@ -1,7 +1,6 @@
 package service
 
 import (
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path"
@@ -10,7 +9,7 @@ import (
 
 // RunFiles ...
 func RunFiles(srcDir, destDir string) error {
-	srcFileInfos, err := ioutil.ReadDir(srcDir)
+	srcFileInfos, err := AFs.ReadDir(srcDir)
 	if err != nil {
 		return err
 	}
