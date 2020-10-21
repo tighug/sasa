@@ -5,26 +5,15 @@ import (
 	"github.com/tighug/sasa/interface/controller"
 )
 
-// initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Initialize a directory",
+	Short: "Initialize the current directory",
 	Run: func(cmd *cobra.Command, args []string) {
 		controller := controller.NewProblemController()
-		controller.Init("./src/", "./resource/", "./answer.txt")
+		controller.Init(config.SrcDir, config.AnsFile, configFile)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(initCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// initCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// initCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

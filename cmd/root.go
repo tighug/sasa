@@ -5,77 +5,68 @@ import (
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-
 	"github.com/spf13/cobra"
-
-	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 )
 
-var cfgFile string
+// Config ...
+type Config struct {
+	SrcDir     string
+	EncodedDir string
+	BuildDir   string
+	OutputDir  string
+	AnsFile    string
+	DBFile     string
+}
 
-// rootCmd represents the base command when called without any subcommands
+const configFile = ".sasarc.yaml"
+
+var config Config
+
 var rootCmd = &cobra.Command{
 	Use:   "sasa",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	//	Run: func(cmd *cobra.Command, args []string) { },
+	Short: "Sasa is an Auntomatic Scoring Application for PandA-1",
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		log.Err(err).Msg("Cannot execute")
-		os.Exit(1)
+		log.Err(err)
 	}
 }
 
 func init() {
-	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
-
+	initLogger()
 	cobra.OnInitialize(initConfig)
-
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.sasa.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-// initConfig reads in config file and ENV variables if set.
-func initConfig() {
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		// Find home directory.
-		home, err := homedir.Dir()
-		if err != nil {
-			log.Err(err).Msg("Cannot execute sasa")
-			os.Exit(1)
-		}
-
-		// Search config in home directory with name ".sasa" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigName(".sasa")
+func initLogger() {
+	output := zerolog.ConsoleWriter{Out: os.Stdout}
+	output.FormatTimestamp = func(i interface{}) string {
+		return ""
 	}
+	log.Logger = log.Output(output)
+}
+
+func initConfig() {
+	viper.AddConfigPath(".")
+	viper.SetConfigName(configFile)
+
+	viper.SetDefault("SrcDir", "src")
+	viper.SetDefault("EncodedDir", "encoded")
+	viper.SetDefault("BuildDir", "build")
+	viper.SetDefault("OutputDir", "output")
+	viper.SetDefault("AnsFile", "answer.txt")
+	viper.SetDefault("DBFile", "db.csv")
 
 	viper.AutomaticEnv() // read in environment variables that match
 
-	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		log.Info().Msg("Using config file:" + viper.ConfigFileUsed())
+		log.Debug().Msgf("A config file is found. Sasa use %q.", viper.ConfigFileUsed())
+	} else {
+		log.Debug().Msg("No config files in the current directory. Sasa use default.")
 	}
+
+	viper.Unmarshal(&config)
 }
