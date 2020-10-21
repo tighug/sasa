@@ -21,8 +21,8 @@ func CompileFiles(srcDir, destDir string, probs model.Problems) (model.Problems,
 	for _, srcFileInfo := range srcFileInfos {
 		srcFileName := srcFileInfo.Name()
 		destFileName := strings.Split(srcFileName, ".")[0]
-		srcPath := strings.Join([]string{srcDir, srcFileName}, "")
-		destPath := strings.Join([]string{destDir, destFileName}, "")
+		srcPath := strings.Join([]string{srcDir, "/", srcFileName}, "")
+		destPath := strings.Join([]string{destDir, "/", destFileName}, "")
 		canCompile := true
 		id, _ := strconv.Atoi(srcFileName[:7])
 

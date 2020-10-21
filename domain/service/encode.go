@@ -29,9 +29,9 @@ func EncodeFiles(srcDir, destDir string) (model.Problems, error) {
 		id := srcFileName[:7]
 		slice := strings.Split(srcFileName[8:], "_")
 		name := slice[0]
-		srcPath := strings.Join([]string{srcDir, srcFileName}, "")
+		srcPath := strings.Join([]string{srcDir, "/", srcFileName}, "")
 		destFileName := strings.Join([]string{id, name}, "_")
-		destPath := strings.Join([]string{destDir, destFileName, ".c"}, "")
+		destPath := strings.Join([]string{destDir, "/", destFileName, ".c"}, "")
 
 		charset := "UTF-8"
 		result, err := detectCharset(srcPath)
