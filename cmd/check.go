@@ -6,17 +6,17 @@ import (
 	"github.com/tighug/sasa/interface/controller"
 )
 
-var runCmd = &cobra.Command{
-	Use:   "run",
-	Short: "Execute binary files",
+var checkCmd = &cobra.Command{
+	Use:   "check",
+	Short: "Check output logs",
 	Run: func(cmd *cobra.Command, args []string) {
 		controller := controller.NewProblemController()
-		if err := controller.Run(config.BuildDir, config.OutputDir, config.InputFile); err != nil {
+		if err := controller.Check(config.OutputDir, config.AnsFile); err != nil {
 			log.Err(err).Msg("")
 		}
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(runCmd)
+	rootCmd.AddCommand(checkCmd)
 }

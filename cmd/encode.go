@@ -6,7 +6,6 @@ import (
 	"github.com/tighug/sasa/interface/controller"
 )
 
-// encodeCmd represents the encode command
 var encodeCmd = &cobra.Command{
 	Use:   "encode",
 	Short: "Encode source files",

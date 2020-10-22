@@ -44,7 +44,7 @@ func (repo *ProblemRepository) FindAll() (model.Problems, error) {
 			Name:       prob.Name,
 			CanCompile: prob.CanCompile,
 			Charset:    prob.Charset,
-			Scores:     prob.Scores,
+			Score:      prob.Score,
 		})
 	}
 	return newProbs, err

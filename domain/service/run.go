@@ -22,18 +22,6 @@ func RunFiles(srcDir, destDir, inputFile string) error {
 		return err
 	}
 
-	var input afero.File
-
-	exists, err := AFs.Exists(inputFile)
-	if err != nil {
-		return nil
-	} else if exists {
-		input, err = AFs.OpenFile(inputFile, os.O_RDONLY, os.ModePerm)
-		if err != nil {
-			return err
-		}
-	}
-
 	for _, srcFileInfo := range srcFileInfos {
 		srcFileName := srcFileInfo.Name()
 		if ext := path.Ext(srcFileName); ext == ".log" {
@@ -47,6 +35,10 @@ func RunFiles(srcDir, destDir, inputFile string) error {
 		destPath := strings.Join([]string{destDir, "/", srcFileName, ".log"}, "")
 
 		cmd := exec.Command(srcPath)
+		input, err := getInput(inputFile)
+		if err != nil {
+			return err
+		}
 		if input != nil {
 			cmd.Stdin = input
 		}
@@ -57,7 +49,20 @@ func RunFiles(srcDir, destDir, inputFile string) error {
 		}
 		defer file.Close()
 		file.Write(output)
-
 	}
 	return err
+}
+
+func getInput(inputFile string) (afero.File, error) {
+	exists, err := AFs.Exists(inputFile)
+	if err != nil {
+		return nil, err
+	} else if exists {
+		input, err := AFs.OpenFile(inputFile, os.O_RDONLY, os.ModePerm)
+		if err != nil {
+			return nil, err
+		}
+		return input, nil
+	}
+	return nil, nil
 }

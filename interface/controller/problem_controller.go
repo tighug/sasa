@@ -51,3 +51,16 @@ func (controller *ProblemController) Compile(srcDir, destDir string) error {
 func (controller *ProblemController) Run(srcDir, destDir, inputFile string) error {
 	return service.RunFiles(srcDir, destDir, inputFile)
 }
+
+// Check ...
+func (controller *ProblemController) Check(srcDir, ansFile string) error {
+	probs, err := controller.Interactor.FindAll()
+	if err != nil {
+		return err
+	}
+	probs, err = service.CheckFiles(srcDir, ansFile, probs)
+	if err != nil {
+		return err
+	}
+	return controller.Interactor.SaveAll(probs)
+}

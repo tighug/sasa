@@ -6,7 +6,6 @@ import (
 	"github.com/tighug/sasa/interface/controller"
 )
 
-// compileCmd represents the compile command
 var buildCmd = &cobra.Command{
 	Use:   "build",
 	Short: "Compile encoded source files",
