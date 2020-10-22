@@ -46,7 +46,7 @@ func initConfig() {
 	viper.SetDefault("BuildDir", "build")
 	viper.SetDefault("OutputDir", "output")
 	viper.SetDefault("AnsFile", "answer.txt")
-	viper.SetDefault("DBFile", "db.csv")
+	viper.SetDefault("DBFile", "database.csv")
 	viper.SetDefault("InputFile", "input.txt")
 
 	viper.AutomaticEnv()

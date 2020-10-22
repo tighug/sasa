@@ -9,7 +9,7 @@ EncodedDir: encoded
 BuildDir: build
 OutputDir: output
 AnsFile: answer.txt
-DBFile: db.csv
+DBFile: database.csv
 InputFile: input.txt`)
 
 // Init ...
