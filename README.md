@@ -49,27 +49,37 @@ Sasa はコマンド一つで採点を終わらせます。
 6. 上記 5 の出力結果（`hello, world`）を`answer.txt`にコピー&ペースト
 7. LETUS から課題をダウンロード
    （"提出をフォルダに入れてダウンロードする"のチェックは外す）
-   <img src="https://github.com/tighug/sasa/blob/asset/image/letus_options.png?raw=true" width=400px />
+   <div align="center">
+      <img src="https://github.com/tighug/sasa/blob/asset/image/letus_options.png?raw=true" width=400px />
+   </div>
 8. ダウンロードした Zip を展開し、中のソースファイルを`src/`内に移動
-   <img src="https://github.com/tighug/sasa/blob/asset/image/src_files.png?raw=true" width=400px />
+   <div align="center">
+      <img src="https://github.com/tighug/sasa/blob/asset/image/source_files.png?raw=true" width=300px />
+   </div>
 9. ターミナル上で`./sasa all`を実行
    （`encoded/`、`build/`、`output/`、`database.csv`が自動で生成される）
-   ```bash
-   $ ./sasa all
-   [1/4] Encoding...
-   [2/4] Building...
-   [3/4] Running...
-   [4/4] Checking...
-   $ ls
-   src/  encoded/  build/  output/
-   sasa  answer.txt  .sasarc.yaml  database.csv
-   ```
-10. 採点結果が記録された`database.csv`を見ながら、LETUS 上で評点を行う
+
+```bash
+$ ./sasa all
+[1/4] Encoding...
+[2/4] Building...
+[3/4] Running...
+[4/4] Checking...
+$ ls
+src/  encoded/  build/  output/
+sasa  answer.txt  .sasarc.yaml  database.csv
+```
+
+11. 採点結果が記録された`database.csv`を見ながら、LETUS 上で評点を行う
     (Score が低いプログラムは、`encoded`内のファイルを個別で確認する)
 
 ## Commands
 
 Sasa で利用できる全サブコマンドです。
+
+<div align="center">
+   <img src="https://github.com/tighug/sasa/blob/asset/image/sasa_cmd.jpg?raw=true" width=400px/>
+</div>
 
 ### `help`
 
