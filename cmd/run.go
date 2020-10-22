@@ -6,7 +6,6 @@ import (
 	"github.com/tighug/sasa/interface/controller"
 )
 
-// runCmd represents the run command
 var runCmd = &cobra.Command{
 	Use:   "run",
 	Short: "Execute binary files",
