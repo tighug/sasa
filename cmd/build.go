@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 	"github.com/tighug/sasa/interface/controller"
+	"github.com/tighug/sasa/logger"
 )
 
 var buildCmd = &cobra.Command{
@@ -12,7 +12,7 @@ var buildCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		controller := controller.NewProblemController()
 		if err := controller.Compile(config.EncodedDir, config.BuildDir); err != nil {
-			log.Err(err).Msg("")
+			logger.Error(err)
 		}
 	},
 }

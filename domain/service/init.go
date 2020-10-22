@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/rs/zerolog/log"
+	"github.com/tighug/sasa/logger"
 )
 
 const defaultConfig = (`SrcDir: src
@@ -27,9 +27,9 @@ func Init(srcDir, ansFile, configFile string) error {
 		if _, err := file.Write([]byte(defaultConfig)); err != nil {
 			return err
 		}
-		log.Info().Msgf("Generated a default config file named %q.", configFile)
+		logger.Info("The config file \"" + configFile + "\" has been created")
 		return nil
 	}
-	log.Warn().Msgf("%q already exists.", configFile)
+	logger.Warn("The config file \"" + configFile + "\" already exists")
 	return nil
 }
