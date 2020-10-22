@@ -44,7 +44,6 @@ func CheckFiles(srcDir, ansFile string, probs model.Problems) (model.Problems, e
 			}
 		}
 	}
-
 	return probs, err
 }
 

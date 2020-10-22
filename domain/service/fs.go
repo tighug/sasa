@@ -3,8 +3,8 @@ package service
 import (
 	"os"
 
-	"github.com/rs/zerolog/log"
 	"github.com/spf13/afero"
+	"github.com/tighug/sasa/logger"
 )
 
 // AFs ...
@@ -15,10 +15,10 @@ func EnsureDir(path string) error {
 	if exists, err := AFs.DirExists(path); err != nil {
 		return err
 	} else if !exists {
-		defer log.Info().Msgf("Created an empty directory named %q.", path)
+		defer logger.Info("The directory \"" + path + "\" has been created.")
 		return AFs.MkdirAll(path, os.ModePerm)
 	}
-	log.Warn().Msgf("%q already exists.", path)
+	logger.Warn("The directory \"" + path + "\" already exists.")
 	return nil
 }
 
@@ -27,9 +27,9 @@ func EnsureFile(path string) (afero.File, error) {
 	if exists, err := AFs.Exists(path); err != nil {
 		return nil, err
 	} else if !exists {
-		defer log.Info().Msgf("Created an empty file named %q.", path)
+		defer logger.Info("The file \"" + path + "\" has been created")
 		return AFs.Create(path)
 	}
-	log.Warn().Msgf("%q already exists.", path)
+	logger.Warn("The directory \"" + path + "\" already exists")
 	return nil, nil
 }
