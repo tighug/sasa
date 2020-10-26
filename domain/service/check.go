@@ -31,9 +31,12 @@ func CheckFiles(srcDir, ansFile string, probs model.Problems) (model.Problems, e
 		}
 
 		score := 0
-		for i, pl := range ansLines {
-			if pl == probLines[i] {
-				score++
+
+		if len(probLines) >= len(ansLines) {
+			for i, pl := range ansLines {
+				if pl == probLines[i] {
+					score++
+				}
 			}
 		}
 
