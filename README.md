@@ -1,4 +1,4 @@
-# Sasa
+# Sasa:tanabata_tree:
 
 > Sasa is an Automatic Scoring Application for "PandA1".
 
@@ -28,34 +28,44 @@ Sasa はコマンド一つで採点を終わらせます。
 1. 作業ディレクトリを新規作成（例 : `workspace/`）
 2. 作業ディレクリにダウンロードした`sasa`を配置
 3. ターミナル上で作業ディレクリに移動
-   ```bash
-   $ cd workspace
-   $ ls
-   sasa
-   ```
+
+```bash
+$ cd workspace
+$ ls
+sasa
+```
+
 4. ターミナル上で`./sasa init`を実行
    （`src/`、`answer.txt`、`.sasarc.yaml`が自動で生成される）
-   ```bash
-   $ ./sasa init
-   $ ls
-   src/  sasa  answer.txt  .sasarc.yaml
-   ```
+
+```bash
+$ ./sasa init
+$ ls
+src/  sasa  answer.txt  .sasarc.yaml
+```
+
 5. 模範解答プログラムを用意して実行（例 : `hello_ans.c`）
-   ```bash
-   $ gcc hello_ans.c -o hello_ans
-   $ ./hello_ans
-   hello, world
-   ```
+
+```bash
+$ gcc hello_ans.c -o hello_ans
+$ ./hello_ans
+hello, world
+```
+
 6. 上記 5 の出力結果（`hello, world`）を`answer.txt`にコピー&ペースト
 7. LETUS から課題をダウンロード
    （"提出をフォルダに入れてダウンロードする"のチェックは外す）
-   <div align="center">
-      <img src="https://github.com/tighug/sasa/blob/asset/image/letus_options.png?raw=true" width=400px />
-   </div>
+
+<div align="center">
+   <img src="https://github.com/tighug/sasa/blob/asset/image/letus_options.png?raw=true" width=400px />
+</div>
+
 8. ダウンロードした Zip を展開し、中のソースファイルを`src/`内に移動
-   <div align="center">
-      <img src="https://github.com/tighug/sasa/blob/asset/image/source_files.png?raw=true" width=300px />
-   </div>
+
+<div align="center">
+   <img src="https://github.com/tighug/sasa/blob/asset/image/source_files.png?raw=true" width=300px />
+</div>
+
 9. ターミナル上で`./sasa all`を実行
    （`encoded/`、`build/`、`output/`、`database.csv`が自動で生成される）
 
@@ -70,12 +80,10 @@ src/  encoded/  build/  output/
 sasa  answer.txt  .sasarc.yaml  database.csv
 ```
 
-11. 採点結果が記録された`database.csv`を見ながら、LETUS 上で評点を行う
-    (Score が低いプログラムは、`encoded`内のファイルを個別で確認する)
+10. 採点結果が記録された`database.csv`を見ながら、LETUS 上で評点を行う
+    (Score が低いプログラムは、`encoded/`内のファイルを個別で確認する)
 
 ## Commands
-
-Sasa で利用できる全サブコマンドです。
 
 <div align="center">
    <img src="https://github.com/tighug/sasa/blob/asset/image/sasa_cmd.jpg?raw=true" width=400px/>
