@@ -34,6 +34,7 @@ var allCmd = &cobra.Command{
 			logger.Error(err)
 		}
 
+		fmt.Println("")
 		logger.Success("")
 	},
 }
