@@ -11,7 +11,7 @@ var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Print the version number of Sasa",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("v1.2.0")
+		fmt.Println("v1.2.1")
 	},
 }
 
